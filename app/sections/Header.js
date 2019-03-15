@@ -1,11 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  AsyncStorage,
+  Alert
+} from "react-native";
 
 export class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false
+      isLoggedIn: false,
+      loggedUser: false
     };
   }
 

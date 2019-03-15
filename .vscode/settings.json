@@ -1,3 +1,4 @@
 {
-    "editor.suggestSelection": "recentlyUsedByPrefix"
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "editor.acceptSuggestionOnCommitCharacter": false
 }

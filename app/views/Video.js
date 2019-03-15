@@ -19,9 +19,9 @@ export class Video extends React.Component {
     };
   }
   componentDidMount() {
-    const API_KEY = "AIzaSyDsANA31VJLiZkvV2WzKj2CRBxrS1tRH9k";
+    const YOUTUBE_API_KEY = "AIzaSyDsANA31VJLiZkvV2WzKj2CRBxrS1tRH9k";
     return fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=interstellar&type=video&key=${API_KEY}`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=interstellar&type=video&key=${YOUTUBE_API_KEY}`
     )
       .then(response => response.json())
       .then(responseJson => {
