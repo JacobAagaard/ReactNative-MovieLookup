@@ -33,6 +33,8 @@ export class Register extends React.Component {
       Alert.alert("Please enter a username");
     } else if (this.state.password !== this.state.passwordConfirm) {
       Alert.alert("Password mismatch");
+    } else if (!this.state.password) {
+      Alert.alert("Please enter a password");
     } else {
       AsyncStorage.getItem(this.state.username, (err, result) => {
         if (result !== null) {

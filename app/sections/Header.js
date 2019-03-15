@@ -17,14 +17,38 @@ export class Header extends React.Component {
     };
   }
 
-  toggleUser = () => {
-    this.setState(previousState => {
-      return { isLoggedIn: !previousState.isLoggedIn };
+  componentDidMount() {
+    AsyncStorage.getItem("userLoggedIn", (err, result) => {
+      if (result === "none") {
+        console.log("No user is logged in");
+      } else if (result === null) {
+        AsyncStorage.setItem("userLoggedIn", "none", (err, result) => {
+          console.log("Initialize user to none");
+        });
+      } else {
+        this.setState({
+          isLoggedIn: true,
+          loggedUser: result
+        });
+      }
     });
+  }
+
+  toggleUser = () => {
+    if (this.state.isLoggedIn) {
+      AsyncStorage.setItem("userLoggedIn", "none", (err, result) => {
+        this.setState({ isLoggedIn: false, loggedUser: false });
+      });
+      Alert.alert("Successfully logged out");
+    } else {
+      this.props.navigate("LoginRT");
+    }
   };
 
   render() {
-    let display = this.state.isLoggedIn ? "Logged In !" : this.props.message;
+    let display = this.state.isLoggedIn
+      ? this.state.loggedUser
+      : this.props.message;
     return (
       <View style={styles.headStyle}>
         <Image

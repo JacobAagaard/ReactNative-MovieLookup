@@ -83,18 +83,7 @@ export class Login extends React.Component {
         />
         <Text style={styles.label}>Enter Password</Text>
 
-        <TextInput
-          style={styles.inputs}
-          onChangeText={text => this.setState({ passwordConfirm: text })}
-          value={this.state.passwordConfirm}
-          secureTextEntry={true}
-        />
-        <Text style={styles.label}>Enter Password</Text>
-
-        <TouchableHighlight
-          onPress={this.registerAccount}
-          underlayColor="#31e981"
-        >
+        <TouchableHighlight onPress={this.loginUser} underlayColor="#31e981">
           <Text style={styles.buttons}>Login</Text>
         </TouchableHighlight>
 
