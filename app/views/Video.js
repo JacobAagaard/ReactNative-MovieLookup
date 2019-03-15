@@ -18,11 +18,10 @@ export class Video extends React.Component {
       listLoaded: false
     };
   }
-
-  componenentDidMount() {
-    let API_KEY = AIzaSyDsANA31VJLiZkvV2WzKj2CRBxrS1tRH9k;
+  componentDidMount() {
+    const API_KEY = "AIzaSyDsANA31VJLiZkvV2WzKj2CRBxrS1tRH9k";
     return fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=interstellar&type=video&key=${API_KEY}`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=interstellar&type=video&key=${API_KEY}`
     )
       .then(response => response.json())
       .then(responseJson => {
@@ -40,12 +39,12 @@ export class Video extends React.Component {
     return (
       <View>
         {this.state.listLoaded && (
-          <View style={{ paddintTop: 30 }}>
+          <View style={{ paddingTop: 30 }}>
             <FlatList
               data={this.state.videoList}
               renderItem={({ item }) => (
                 <TubeItem
-                  id={item.id}
+                  id={item.id.videoId}
                   title={item.snippet.title}
                   imageSrc={item.snippet.thumbnails.high.url}
                 />
@@ -53,9 +52,8 @@ export class Video extends React.Component {
             />
           </View>
         )}
-
         {!this.state.listLoaded && (
-          <View>
+          <View style={{ paddingTop: 30 }}>
             <Text>LOADING</Text>
           </View>
         )}
