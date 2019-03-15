@@ -65,16 +65,16 @@ export class Header extends React.Component {
 
 const styles = StyleSheet.create({
   headText: {
+    paddingTop: 30,
     textAlign: "right",
     color: "white",
     fontSize: 20,
-    flex: 1
+    flex: 4
   },
   headStyle: {
-    paddingTop: 30,
     paddingRight: 10,
     backgroundColor: "#35605a",
-    flex: 1,
+    flex: 1.5,
     flexDirection: "row",
     borderBottomWidth: 2,
     borderColor: "#000000"

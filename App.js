@@ -6,6 +6,9 @@ import { Video } from "./app/views/Video.js";
 import { VideoDetail } from "./app/views/VideoDetail.js";
 import { Register } from "./app/views/Register.js";
 import { Login } from "./app/views/Login.js";
+import { Quiz } from "./app/views/Quiz.js";
+import { FinishQuiz } from "./app/views/QuizFinish.js";
+import { About } from "./app/views/About.js";
 
 const MyRoutes = StackNavigator(
   {
@@ -26,6 +29,18 @@ const MyRoutes = StackNavigator(
     },
     LoginRT: {
       screen: Login
+    },
+    QuizRT: {
+      screen: Quiz
+    },
+    FinishQuizRT: {
+      screen: FinishQuiz
+    },
+    AboutRT: {
+      screen: About
+    },
+    BlogRT: {
+      screen: About
     }
   },
   {

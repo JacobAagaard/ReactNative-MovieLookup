@@ -25,7 +25,10 @@ export class Menu extends React.Component {
         </View>
 
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.buttonStyles} onPress={this.onPress}>
+          <TouchableOpacity
+            style={styles.buttonStyles}
+            onPress={() => this.props.navigate("BlogRT")}
+          >
             <Text style={styles.buttonText}>BLOG</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -37,10 +40,16 @@ export class Menu extends React.Component {
         </View>
 
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.buttonStyles} onPress={this.onPress}>
+          <TouchableOpacity
+            style={styles.buttonStyles}
+            onPress={() => this.props.navigate("QuizRT")}
+          >
             <Text style={styles.buttonText}>QUIZ</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonStyles} onPress={this.onPress}>
+          <TouchableOpacity
+            style={styles.buttonStyles}
+            onPress={() => this.props.navigate("AboutRT")}
+          >
             <Text style={styles.buttonText}>ABOUT</Text>
           </TouchableOpacity>
         </View>
