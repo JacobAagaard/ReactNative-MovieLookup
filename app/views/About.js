@@ -1,16 +1,22 @@
 import React from "react";
-import { StyleSheet, Text, ScrollView, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Linking,
+  View
+} from "react-native";
 
 const aboutML =
   "MovieLookup is a search engine for matching your favorite streaming service with IMDb. It is created purely because a proficient alternative was not available. MovieLookup is a hobby project and therefore is free to use.";
 
-const whoML = "Author: Jacob Aagaard, Launched: March 2019";
+const whoML = "Author: Jacob Aagaard - Launched: March 2019";
+
+const repo = "https://github.com/JacobAagaard/ReactNative-MovieLookup";
 
 export class About extends React.Component {
-  static navigationOptions = {
-    header: null
-  };
-
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -23,13 +29,16 @@ export class About extends React.Component {
 
         <Text style={styles.aboutTitle}>About ML</Text>
         <Text style={styles.aboutText}>{whoML}</Text>
-        <Text
-          onPress={() => this.props.navigation.goBack()}
-          style={styles.backButton}
-        >
-          GO BACK
-        </Text>
-        <Text style={{ fontWeight: "bold" }} />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.urlButton}
+            onPress={() => {
+              Linking.openURL(repo);
+            }}
+          >
+            <Text style={{ color: "white" }}>Github</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }
@@ -55,10 +64,15 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   },
-  backButton: {
-    paddingTop: 20,
-    paddingBottom: 50,
-    fontSize: 20,
-    textAlign: "center"
+  urlButton: {
+    backgroundColor: "#35605a",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    width: 150
+  },
+  buttonContainer: {
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
