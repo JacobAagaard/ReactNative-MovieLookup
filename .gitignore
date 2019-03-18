@@ -1,1 +1,28 @@
+#Mix of: https://github.com/facebook/react-native/blob/master/.gitignore
+# and: https://github.com/expo/expo/blob/master/.gitignore
+
+# Expo
+.expo
+__generated__
+
+# Node
 node_modules
+npm-debug.log
+package-lock.json
+
+# Android
+*.apk
+
+# Keystore
+*.jks
+
+# VS Code
+.vscode
+
+.watchmanconfig
+
+# Expo web env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
