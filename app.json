@@ -1,9 +1,11 @@
 {
   "expo": {
     "name": "Movie Lookup",
-    "slug": "expo.io/@flonk/movie-lookup",
+    "description": "MovieLookup is a search engine for matching your favorite streaming service with IMDb.",
+    "slug": "movielookup",
     "privacy": "public",
     "sdkVersion": "32.0.0",
+    "githubUrl": "https://github.com/JacobAagaard/ReactNative-MovieLookup",
     "platforms": [
       "ios",
       "android"
@@ -28,8 +30,6 @@
     },
     "android": {
       "package": "com.flonk.movielookup"
-    },
-    "description": "MovieLookup is a search engine for matching your favorite streaming service with IMDb.",
-    "githubUrl": "https://github.com/JacobAagaard/ReactNative-MovieLookup"
+    }
   }
 }
