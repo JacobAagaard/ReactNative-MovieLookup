@@ -8,7 +8,7 @@ import {
   Alert,
   AlertButton
 } from "react-native";
-import * as firebase from "../db/config";
+import * as firebase from "../db/firebaseConfig";
 
 export class Header extends React.Component {
   constructor(props) {
