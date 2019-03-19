@@ -84,6 +84,7 @@ export class Register extends React.Component {
           value={this.state.username}
           placeholder="Enter Email"
           placeholderTextColor="rgb(211, 172, 0)"
+          returnKeyType="next"
         />
 
         <TextInput
@@ -93,6 +94,7 @@ export class Register extends React.Component {
           secureTextEntry={true}
           placeholder="Enter Password"
           placeholderTextColor="rgb(211, 172, 0)"
+          returnKeyType="next"
         />
 
         <TextInput
@@ -102,6 +104,7 @@ export class Register extends React.Component {
           secureTextEntry={true}
           placeholder="Enter Password again"
           placeholderTextColor="rgb(211, 172, 0)"
+          returnKeyType="done"
         />
 
         <TouchableHighlight

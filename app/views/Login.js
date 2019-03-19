@@ -79,6 +79,7 @@ export class Login extends React.Component {
           placeholderTextColor="rgb(211, 172, 0)"
           onChangeText={text => this.setState({ username: text })}
           value={this.state.username}
+          returnKeyType="next"
         />
 
         <TextInput
@@ -88,6 +89,7 @@ export class Login extends React.Component {
           onChangeText={text => this.setState({ password: text })}
           value={this.state.password}
           secureTextEntry={true}
+          returnKeyType="done"
         />
 
         <TouchableHighlight onPress={this.loginUser} style={styles.touchables}>

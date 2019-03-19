@@ -30,19 +30,23 @@ export class Video extends React.Component {
           (snapshot.val() && snapshot.val()) || "API_KEY_NOT_FOUND";
       })
       .then(() => {
-        return fetch(
-          `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=interstellar&type=video&key=${YOUTUBE_API_KEY}`
-        )
-          .then(response => response.json())
-          .then(responseJson => {
-            this.setState({
-              listLoaded: true,
-              videoList: Array.from(responseJson.items)
-            });
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        return this.fetchYoutubeVideos(YOUTUBE_API_KEY);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  fetchYoutubeVideos(YOUTUBE_API_KEY) {
+    return fetch(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=interstellar&type=video&key=${YOUTUBE_API_KEY}`
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          listLoaded: true,
+          videoList: Array.from(responseJson.items)
+        });
       })
       .catch(error => {
         console.log(error);
