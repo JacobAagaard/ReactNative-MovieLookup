@@ -6,7 +6,7 @@ import {
   Image,
   AsyncStorage,
   Alert,
-  AlertButton
+  TouchableOpacity
 } from "react-native";
 import * as firebase from "../db/firebaseConfig";
 
@@ -61,15 +61,18 @@ export class Header extends React.Component {
   };
 
   render() {
-    let display = this.state.isLoggedIn
-      ? this.state.loggedUser
-      : this.props.message;
+    let display = this.state.isLoggedIn ? "Logged In" : this.props.message;
     return (
-      <View style={styles.headStyle}>
-        <Image
-          style={styles.logoStyle}
-          source={require("./img/MovieLookup_transparent.png")}
-        />
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.touchableLogo}
+          onPress={() => this.props.navigate("AboutRT")}
+        >
+          <Image
+            style={styles.logo}
+            source={require("./img/MovieLookup_transparent.png")}
+          />
+        </TouchableOpacity>
         <Text onPress={this.toggleUser} style={styles.headText}>
           {display}
         </Text>
@@ -79,24 +82,24 @@ export class Header extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  headText: {
-    paddingTop: 30,
-    textAlign: "right",
-    color: "rgb(211, 172, 0)",
-    fontSize: 20,
-    flex: 4
-  },
-  headStyle: {
+  container: {
+    height: 50,
     paddingRight: 10,
     backgroundColor: "#35605a",
-    flex: 1.5,
-    flexDirection: "row",
-    borderBottomWidth: 2,
-    borderColor: "#000000"
+    flexDirection: "row"
   },
-  logoStyle: {
+  touchableLogo: {
+    flex: 1
+  },
+  headText: {
+    paddingTop: 10,
+    textAlign: "right",
+    color: "rgb(211, 172, 0)",
+    fontSize: 20
+  },
+  logo: {
     flex: 1,
-    width: undefined,
-    height: undefined
+    resizeMode: "contain",
+    alignSelf: "flex-end"
   }
 });

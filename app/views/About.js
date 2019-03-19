@@ -47,6 +47,14 @@ export class About extends React.Component {
           >
             <Text style={{ color: "white" }}>Github</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.urlButton}
+            onPress={() => {
+              this.props.navigation.navigate("ContactRT");
+            }}
+          >
+            <Text style={{ color: "white" }}>Contact</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
@@ -77,10 +85,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#35605a",
     alignItems: "center",
     justifyContent: "center",
+    margin: 5,
     padding: 10,
     width: 150
   },
   buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center"
   }

@@ -1,84 +1,55 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Text, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  Image
+} from "react-native";
 
 export class Menu extends React.Component {
-  onPress = () => {
-    Alert.alert("You tapped the button");
-  };
-
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.buttonRow}>
+      <ScrollView style={styles.container}>
+        <View style={styles.videoRow}>
           <TouchableOpacity
-            style={styles.buttonStyles}
+            style={styles.touchable}
             onPress={() => this.props.navigate("VideosRT")}
           >
-            <Text style={styles.buttonText}>VIDEOS</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyles}
-            onPress={() => this.props.navigate("RegisterRT")}
-          >
-            <Text style={styles.buttonText}>REGISTER</Text>
+            <Image
+              style={styles.videoImg}
+              source={require("./img/MovieLookup_transparent.png")}
+            />
+            <Text style={styles.buttonText}>VideoTitle</Text>
           </TouchableOpacity>
         </View>
-
-        <View style={styles.buttonRow}>
-          <TouchableOpacity
-            style={styles.buttonStyles}
-            onPress={() => this.props.navigate("BlogRT")}
-          >
-            <Text style={styles.buttonText}>BLOG</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyles}
-            onPress={() => this.props.navigate("ContactRT")}
-          >
-            <Text style={styles.buttonText}>CONTACT</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.buttonRow}>
-          <TouchableOpacity
-            style={styles.buttonStyles}
-            onPress={() => this.props.navigate("QuizRT")}
-          >
-            <Text style={styles.buttonText}>QUIZ</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonStyles}
-            onPress={() => this.props.navigate("AboutRT")}
-          >
-            <Text style={styles.buttonText}>ABOUT</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 6,
+    flex: 1,
     backgroundColor: "#35605a"
   },
-  buttonRow: {
-    flex: 2,
+  videoRow: {
+    flex: 1,
     flexDirection: "row",
-    alignItems: "center",
-    borderColor: "#ffffff",
-    borderBottomWidth: 1
+    alignItems: "flex-start"
   },
-  buttonStyles: {
+  touchable: {
     backgroundColor: "#35605a",
-    width: "50%",
-    height: "50%",
-    justifyContent: "center",
     alignItems: "center"
   },
   buttonText: {
     color: "#ffffff",
     fontSize: 18
+  },
+  videoImg: {
+    flex: 1,
+    height: 100,
+    width: 100
   }
 });

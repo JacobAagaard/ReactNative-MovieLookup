@@ -14,7 +14,8 @@ export class Register extends React.Component {
   static navigationOptions = {
     title: "Register",
     headerStyle: {
-      backgroundColor: "#35605a"
+      backgroundColor: "#35605a",
+      paddingTop: 0
     },
     headerTitleStyle: {
       flex: 1

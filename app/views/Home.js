@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, StatusBar } from "react-native";
 import { Header } from "../sections/Header.js";
 import { Hero } from "../sections/Hero.js";
 import { Menu } from "../sections/Menu.js";
@@ -14,6 +14,7 @@ export class Home extends React.Component {
 
     return (
       <View style={styles.container}>
+        <StatusBar hidden />
         <Header navigate={navigate} message="Press to Login" />
         <Hero />
         <Menu navigate={navigate} />

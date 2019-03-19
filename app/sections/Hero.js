@@ -23,11 +23,12 @@ export class Hero extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={this.toggleSearch} style={{ flex: 10 }}>
+      <TouchableOpacity onPress={this.toggleSearch} style={styles.container}>
         {!this.state.logoClicked ? (
           <Image
             style={styles.heroImage}
             source={require("./img/MovieLookup_transparent.png")}
+            resizeMode={"contain"}
           />
         ) : (
           <View>
@@ -52,14 +53,16 @@ export class Hero extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  heroImage: {
-    width: undefined,
-    height: undefined,
+  container: {
     flex: 1
+  },
+  heroImage: {
+    flex: 1,
+    alignSelf: "center"
   },
   heroInput: {
     textAlign: "center",
-    paddingTop: "50%",
+    paddingTop: "25%",
     fontSize: 24
   }
 });
