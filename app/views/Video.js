@@ -6,7 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback
 } from "react-native";
-import * as firebase from "../db/config";
+import * as firebase from "../db/firebaseConfig";
 
 export class Video extends React.Component {
   static navigationOptions = {

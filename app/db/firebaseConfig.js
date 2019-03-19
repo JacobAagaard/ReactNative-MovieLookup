@@ -1,4 +1,4 @@
-import * as firebase from "firebase";
+import * as firebaseApp from "firebase";
 
 const config = {
   apiKey: "AIzaSyDFLOjja8R5vmI4H0q0cDe0MKpHsi7JnP8",
@@ -7,8 +7,8 @@ const config = {
   projectId: "reactnative-movielookup",
   storageBucket: "reactnative-movielookup.appspot.com",
   messagingSenderId: "624517836410",
-  signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID]
+  signInOptions: [firebaseApp.auth.EmailAuthProvider.PROVIDER_ID]
 };
 
-let app = firebase.initializeApp(config);
-export const db = app.database();
+let app = firebaseApp.initializeApp(config);
+export const firebase = app.database();

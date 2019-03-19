@@ -8,7 +8,7 @@ import {
   AsyncStorage,
   TextInput
 } from "react-native";
-import * as firebase from "../db/config";
+import * as firebase from "../db/firebaseConfig";
 
 export class Register extends React.Component {
   static navigationOptions = {
