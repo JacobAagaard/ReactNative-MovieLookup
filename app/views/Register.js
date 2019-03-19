@@ -8,10 +8,17 @@ import {
   AsyncStorage,
   TextInput
 } from "react-native";
+import * as firebase from "../db/config";
 
 export class Register extends React.Component {
   static navigationOptions = {
-    header: null
+    title: "Register",
+    headerStyle: {
+      backgroundColor: "#35605a"
+    },
+    headerTitleStyle: {
+      flex: 1
+    }
   };
 
   constructor(props) {
@@ -24,66 +31,79 @@ export class Register extends React.Component {
   }
 
   cancelRegister = () => {
-    Alert.alert("Registration cancelled");
+    console.log("Registration cancelled");
     this.props.navigation.navigate("HomeRT");
   };
 
   registerAccount = () => {
-    if (!this.state.username) {
-      Alert.alert("Please enter a username");
+    if (!this.state.username || !this.validateEmail(this.state.username)) {
+      Alert.alert("Please enter a vaild Email");
     } else if (this.state.password !== this.state.passwordConfirm) {
       Alert.alert("Password mismatch");
     } else if (!this.state.password) {
       Alert.alert("Please enter a password");
     } else {
-      AsyncStorage.getItem(this.state.username, (err, result) => {
-        if (result !== null) {
-          Alert.alert(`${this.state.username} already exists`);
-        } else {
-          AsyncStorage.setItem(
-            this.state.username,
-            this.state.password,
-            (err, result) => {
-              Alert.alert(`${this.state.username} account created`);
-              this.props.navigation.navigate("HomeRT");
-            }
-          );
-        }
-      });
+      firebase.db.app
+        .auth()
+        .createUserWithEmailAndPassword(
+          this.state.username,
+          this.state.password
+        )
+        .then(() => {
+          Alert.alert(`${this.state.username} account created`);
+          this.props.navigation.navigate("HomeRT");
+        })
+        .catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if (errorCode == "auth/weak-password") {
+            alert("The password is too weak.");
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+        });
     }
   };
+
+  validateEmail(mail) {
+    const validMailPattern = /\S+@\S+\.\S+/;
+    if (validMailPattern.test(mail)) {
+      return true;
+    }
+    return false;
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Register Account</Text>
-
         <TextInput
           style={styles.inputs}
           onChangeText={text => this.setState({ username: text })}
           value={this.state.username}
+          placeholder="Enter Email"
         />
-        <Text style={styles.label}>Enter Username</Text>
 
         <TextInput
           style={styles.inputs}
           onChangeText={text => this.setState({ password: text })}
           value={this.state.password}
           secureTextEntry={true}
+          placeholder="Enter Password"
         />
-        <Text style={styles.label}>Enter Password</Text>
 
         <TextInput
           style={styles.inputs}
           onChangeText={text => this.setState({ passwordConfirm: text })}
           value={this.state.passwordConfirm}
           secureTextEntry={true}
+          placeholder="Enter Password again"
         />
-        <Text style={styles.label}>Enter Password</Text>
 
         <TouchableHighlight
           onPress={this.registerAccount}
-          underlayColor="#31e981"
+          style={styles.touchables}
         >
           <Text style={styles.buttons}>Register</Text>
         </TouchableHighlight>
@@ -91,6 +111,9 @@ export class Register extends React.Component {
         <TouchableHighlight
           onPress={this.cancelRegister}
           underlayColor="#31e981"
+          style={styles.touchables}
+          borderColor="#35605a"
+          borderWidth="1px"
         >
           <Text style={styles.buttons}>Cancel</Text>
         </TouchableHighlight>
@@ -106,20 +129,23 @@ const styles = StyleSheet.create({
     paddingBottom: "45%",
     paddingTop: "10%"
   },
-  heading: {
-    flex: 1,
-    fontSize: 16
-  },
   inputs: {
     flex: 1,
     width: "80%",
-    padding: 10
+    padding: 10,
+    marginBottom: 10,
+    borderColor: "gray",
+    borderWidth: 1
   },
   buttons: {
-    marginTop: 15,
-    fontSize: 16
+    fontSize: 16,
+    textAlign: "center"
   },
-  labels: {
-    paddingBottom: 10
+  touchables: {
+    borderColor: "#35605a",
+    borderWidth: 1,
+    marginTop: 15,
+    width: 100,
+    padding: 5
   }
 });

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback
 } from "react-native";
+import * as firebase from "../db/config";
 
 export class Video extends React.Component {
   static navigationOptions = {
@@ -19,16 +20,29 @@ export class Video extends React.Component {
     };
   }
   componentDidMount() {
-    const YOUTUBE_API_KEY = "AIzaSyDsANA31VJLiZkvV2WzKj2CRBxrS1tRH9k";
-    return fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=interstellar&type=video&key=${YOUTUBE_API_KEY}`
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          listLoaded: true,
-          videoList: Array.from(responseJson.items)
-        });
+    let YOUTUBE_API_KEY = "";
+    firebase.db.app
+      .database()
+      .ref("/store/YOUTUBE_API_KEY")
+      .once("value")
+      .then(snapshot => {
+        YOUTUBE_API_KEY =
+          (snapshot.val() && snapshot.val()) || "API_KEY_NOT_FOUND";
+      })
+      .then(() => {
+        return fetch(
+          `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=interstellar&type=video&key=${YOUTUBE_API_KEY}`
+        )
+          .then(response => response.json())
+          .then(responseJson => {
+            this.setState({
+              listLoaded: true,
+              videoList: Array.from(responseJson.items)
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
       })
       .catch(error => {
         console.log(error);

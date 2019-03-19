@@ -5,8 +5,10 @@ import {
   View,
   Image,
   AsyncStorage,
-  Alert
+  Alert,
+  AlertButton
 } from "react-native";
+import * as firebase from "../db/config";
 
 export class Header extends React.Component {
   constructor(props) {
@@ -36,10 +38,23 @@ export class Header extends React.Component {
 
   toggleUser = () => {
     if (this.state.isLoggedIn) {
-      AsyncStorage.setItem("userLoggedIn", "none", (err, result) => {
-        this.setState({ isLoggedIn: false, loggedUser: false });
-      });
-      Alert.alert("Successfully logged out");
+      Alert.alert("Logout?", null, [
+        { text: "Cancel" },
+        {
+          text: "Logout",
+          onPress: () => {
+            firebase.db.app
+              .auth()
+              .signOut()
+              .catch(function(error) {
+                console.log(error.code + ": " + error.message);
+                // An error happened.
+              });
+            this.setState({ isLoggedIn: false, loggedUser: false });
+            Alert.alert("Successfully logged out");
+          }
+        }
+      ]);
     } else {
       this.props.navigate("LoginRT");
     }

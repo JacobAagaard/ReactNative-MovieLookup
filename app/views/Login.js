@@ -8,10 +8,17 @@ import {
   AsyncStorage,
   TextInput
 } from "react-native";
+import * as firebase from "../db/config";
 
 export class Login extends React.Component {
   static navigationOptions = {
-    header: null
+    title: "Login",
+    headerStyle: {
+      backgroundColor: "#35605a"
+    },
+    headerTitleStyle: {
+      flex: 1
+    }
   };
 
   constructor(props) {
@@ -23,7 +30,7 @@ export class Login extends React.Component {
   }
 
   cancelLogin = () => {
-    Alert.alert("Login cancelled");
+    console.log("Login cancelled");
     this.props.navigation.navigate("HomeRT");
   };
 
@@ -38,26 +45,26 @@ export class Login extends React.Component {
           Alert.alert("Someone already logged on");
           this.props.navigation.navigate("HomeRT");
         } else {
-          AsyncStorage.getItem(this.state.username, (err, result) => {
-            if (result !== null) {
-              if (result !== this.state.password) {
-                Alert.alert("Password incorrect");
-              } else {
-                AsyncStorage.setItem(
-                  "userLoggedIn",
-                  this.state.username,
-                  (err, result) => {
-                    Alert.alert(
-                      `${this.state.username} successfully logged in`
-                    );
-                    this.props.navigation.navigate("HomeRT");
-                  }
-                );
-              }
-            } else {
-              Alert.alert(`No account for ${this.state.username}`);
-            }
-          });
+          firebase.db.app
+            .auth()
+            .signInWithEmailAndPassword(
+              this.state.username,
+              this.state.password
+            )
+            .then(() => {
+              AsyncStorage.setItem(
+                "userLoggedIn",
+                this.state.username,
+                (err, result) => {
+                  Alert.alert(`${this.state.username} successfully logged in`);
+                  this.props.navigation.navigate("HomeRT");
+                }
+              );
+            })
+            .catch(error => {
+              alert(error.message);
+              console.log(error);
+            });
         }
       });
     }
@@ -66,30 +73,30 @@ export class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Login</Text>
-
         <TextInput
           style={styles.inputs}
+          placeholder="Email"
+          placeholderTextColor="rgb(211, 172, 0)"
           onChangeText={text => this.setState({ username: text })}
           value={this.state.username}
         />
-        <Text style={styles.label}>Enter Username</Text>
 
         <TextInput
           style={styles.inputs}
+          placeholder="Password"
+          placeholderTextColor="rgb(211, 172, 0)"
           onChangeText={text => this.setState({ password: text })}
           value={this.state.password}
           secureTextEntry={true}
         />
-        <Text style={styles.label}>Enter Password</Text>
 
-        <TouchableHighlight onPress={this.loginUser} underlayColor="#31e981">
+        <TouchableHighlight onPress={this.loginUser} style={styles.touchables}>
           <Text style={styles.buttons}>Login</Text>
         </TouchableHighlight>
 
         <TouchableHighlight
-          onPress={this.cancelRegister}
-          underlayColor="#31e981"
+          onPress={this.cancelLogin}
+          style={styles.touchables}
         >
           <Text style={styles.buttons}>Cancel</Text>
         </TouchableHighlight>
@@ -112,13 +119,20 @@ const styles = StyleSheet.create({
   inputs: {
     flex: 1,
     width: "80%",
-    padding: 10
+    padding: 5,
+    marginBottom: 10,
+    borderColor: "gray",
+    borderWidth: 1
   },
   buttons: {
-    marginTop: 15,
+    textAlign: "center",
     fontSize: 16
   },
-  labels: {
-    paddingBottom: 10
+  touchables: {
+    borderColor: "#35605a",
+    borderWidth: 1,
+    marginTop: 15,
+    width: 100,
+    padding: 5
   }
 });
