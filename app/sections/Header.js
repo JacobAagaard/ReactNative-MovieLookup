@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   headText: {
     paddingTop: 30,
     textAlign: "right",
-    color: "white",
+    color: "rgb(211, 172, 0)",
     fontSize: 20,
     flex: 4
   },

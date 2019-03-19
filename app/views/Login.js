@@ -112,10 +112,6 @@ const styles = StyleSheet.create({
     paddingBottom: "45%",
     paddingTop: "10%"
   },
-  heading: {
-    flex: 1,
-    fontSize: 16
-  },
   inputs: {
     flex: 1,
     width: "80%",

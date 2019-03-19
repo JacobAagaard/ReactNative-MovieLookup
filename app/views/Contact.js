@@ -7,12 +7,16 @@ import {
   TouchableHighlight,
   Alert
 } from "react-native";
-import { Header } from "../sections/Header.js";
-import { StackNavigator } from "react-navigation";
 
 export class Contact extends React.Component {
   static navigationOptions = {
-    header: null
+    title: "Contact",
+    headerStyle: {
+      backgroundColor: "#35605a"
+    },
+    headerTitleStyle: {
+      flex: 1
+    }
   };
   constructor(props) {
     super(props);
@@ -31,15 +35,14 @@ export class Contact extends React.Component {
   };
 
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Header navigate={navigate} message="Press to Login" />
-        <Text style={styles.heading}>Contact Us</Text>
         <TextInput
           style={styles.inputs}
           onChangeText={text => this.setState({ name: text })}
           value={this.state.name}
+          placeholder="Enter Name"
+          placeholderTextColor="rgb(211, 172, 0)"
         />
         <TextInput
           style={styles.multiInput}
@@ -47,17 +50,28 @@ export class Contact extends React.Component {
           value={this.state.msg}
           multiline={true}
           numberOfLines={4}
+          placeholder="Enter Message"
+          placeholderTextColor="rgb(211, 172, 0)"
         />
         <TextInput
           style={styles.inputs}
           onChangeText={text => this.setState({ email: text })}
           value={this.state.email}
+          placeholder="Enter E-mail address"
+          placeholderTextColor="rgb(211, 172, 0)"
         />
 
-        <TouchableHighlight onPress={this.sendMessage} underlayColor="#31e981">
+        <TouchableHighlight
+          onPress={this.sendMessage}
+          style={styles.touchables}
+        >
           <Text style={styles.buttons}>Send Message</Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this.clearFields} underlayColor="#31e981">
+
+        <TouchableHighlight
+          onPress={this.clearFields}
+          style={styles.touchables}
+        >
           <Text style={styles.buttons}>Reset Form</Text>
         </TouchableHighlight>
       </View>
@@ -69,24 +83,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingBottom: "45%"
-  },
-  heading: {
-    fontSize: 16,
-    flex: 1
+    paddingBottom: "45%",
+    paddingTop: "10%"
   },
   inputs: {
     flex: 1,
     width: "80%",
-    padding: 10
+    padding: 5,
+    marginBottom: 10,
+    borderColor: "gray",
+    borderWidth: 1
   },
   multiInput: {
-    flex: 2,
-    width: "90%",
-    paddingTop: 20
+    flex: 5,
+    width: "80%",
+    padding: 5,
+    marginBottom: 10,
+    borderColor: "gray",
+    borderWidth: 1
   },
   buttons: {
-    marginTop: 15,
+    textAlign: "center",
     fontSize: 16
+  },
+  touchables: {
+    borderColor: "#35605a",
+    borderWidth: 1,
+    marginTop: 15,
+    width: 150,
+    padding: 5
   }
 });

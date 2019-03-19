@@ -17,6 +17,15 @@ const whoML = "Author: Jacob Aagaard - Launched: March 2019";
 const repo = "https://github.com/JacobAagaard/ReactNative-MovieLookup";
 
 export class About extends React.Component {
+  static navigationOptions = {
+    title: "About",
+    headerStyle: {
+      backgroundColor: "#35605a"
+    },
+    headerTitleStyle: {
+      flex: 1
+    }
+  };
   render() {
     return (
       <ScrollView style={styles.container}>

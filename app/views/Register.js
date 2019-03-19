@@ -83,6 +83,7 @@ export class Register extends React.Component {
           onChangeText={text => this.setState({ username: text })}
           value={this.state.username}
           placeholder="Enter Email"
+          placeholderTextColor="rgb(211, 172, 0)"
         />
 
         <TextInput
@@ -91,6 +92,7 @@ export class Register extends React.Component {
           value={this.state.password}
           secureTextEntry={true}
           placeholder="Enter Password"
+          placeholderTextColor="rgb(211, 172, 0)"
         />
 
         <TextInput
@@ -99,6 +101,7 @@ export class Register extends React.Component {
           value={this.state.passwordConfirm}
           secureTextEntry={true}
           placeholder="Enter Password again"
+          placeholderTextColor="rgb(211, 172, 0)"
         />
 
         <TouchableHighlight
