@@ -5,24 +5,37 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
-  Image
+  Image,
+  FlatList
 } from "react-native";
+import store from "../searchStore";
+import { TubeItem } from "../views/Video";
 
 export class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = store.getState();
+    store.subscribe(() => {
+      this.setState(store.getState());
+    });
+  }
   render() {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.videoRow}>
-          <TouchableOpacity
-            style={styles.touchable}
-            onPress={() => this.props.navigate("VideosRT")}
-          >
-            <Image
-              style={styles.videoImg}
-              source={require("./img/MovieLookup_transparent.png")}
+          {this.state.videosLoaded && (
+            <FlatList
+              data={this.state.videoList}
+              renderItem={({ item }) => (
+                <TubeItem
+                  id={item.id.videoId}
+                  title={item.snippet.title}
+                  imageSrc={item.snippet.thumbnails.high.url}
+                  navigate={this.props.navigate}
+                />
+              )}
             />
-            <Text style={styles.buttonText}>VideoTitle</Text>
-          </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     );
