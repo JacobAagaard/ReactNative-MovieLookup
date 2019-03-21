@@ -10,11 +10,13 @@ const defaultState = {
       current: "Initial search",
       prevSearches: [""]
     }
-  ]
+  ],
+  logoFlexAnim: 1
 };
 
 function searchStore(state = defaultState, action) {
-  console.log("entered searchStore with type: " + action.type);
+  if (action.type != "NEW_SEARCH")
+    console.log("entered searchStore with type: " + action.type);
   switch (action.type) {
     case "STORE_SEARCH":
       return Object.assign({}, state, {
@@ -31,7 +33,8 @@ function searchStore(state = defaultState, action) {
       });
     case "TOGGLE_SEARCH":
       return Object.assign({}, state, {
-        logoClicked: !state.logoClicked.valueOf()
+        logoClicked: !state.logoClicked.valueOf(),
+        logoFlexAnim: !state.logoClicked ? 0.1 : 1
       });
     case "VIDEOS_LOADED":
       return Object.assign({}, state, {

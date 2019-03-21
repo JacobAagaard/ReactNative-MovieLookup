@@ -1,14 +1,6 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-  ScrollView,
-  Image,
-  FlatList
-} from "react-native";
-import store from "../searchStore";
+import { StyleSheet, View, ScrollView, FlatList, Image } from "react-native";
+import store from "../redux/searchStore";
 import { TubeItem } from "../views/Video";
 
 export class Menu extends React.Component {
@@ -20,6 +12,7 @@ export class Menu extends React.Component {
     });
   }
   render() {
+    const searchInfo = require("./img/search.png");
     return (
       <ScrollView style={styles.container}>
         <View style={styles.videoRow}>
@@ -37,6 +30,17 @@ export class Menu extends React.Component {
             />
           )}
         </View>
+        {this.state.logoClicked || this.state.videosLoaded ? (
+          <></>
+        ) : (
+          <Image
+            style={{
+              width: "50%",
+              resizeMode: "contain"
+            }}
+            source={searchInfo}
+          />
+        )}
       </ScrollView>
     );
   }

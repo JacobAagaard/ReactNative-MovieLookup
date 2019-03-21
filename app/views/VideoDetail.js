@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, WebView } from "react-native";
+import { WebView } from "react-native";
 
 export class VideoDetail extends React.Component {
   static navigationOptions = {
