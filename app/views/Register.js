@@ -5,7 +5,6 @@ import {
   View,
   TouchableHighlight,
   Alert,
-  AsyncStorage,
   TextInput
 } from "react-native";
 import * as firebase from "../db/firebaseConfig";

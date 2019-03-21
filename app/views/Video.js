@@ -4,7 +4,8 @@ import {
   View,
   FlatList,
   Image,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  StyleSheet
 } from "react-native";
 import * as firebase from "../db/firebaseConfig";
 
@@ -90,9 +91,9 @@ export class TubeItem extends React.Component {
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.onPress}>
-        <View style={{ paddingTop: 20, alignItems: "center" }}>
+        <View style={styles.container}>
           <Image
-            style={{ width: "100%", height: 200 }}
+            style={styles.animatedImg}
             source={{ uri: this.props.imageSrc }}
           />
           <Text>{this.props.title}</Text>
@@ -101,3 +102,11 @@ export class TubeItem extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: { paddingTop: 20, alignItems: "center" },
+  animatedImg: {
+    width: "100%",
+    height: 200
+  }
+});
