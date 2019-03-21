@@ -30,7 +30,11 @@ export class Menu extends React.Component {
             />
           )}
         </View>
+<<<<<<< HEAD
         {this.state.logoClicked || this.state.videosLoaded ? (
+=======
+        {this.state.logoClicked ? (
+>>>>>>> c26e8f2242492e7b3592e1e63ae8ccec13826ca5
           <></>
         ) : (
           <Image
