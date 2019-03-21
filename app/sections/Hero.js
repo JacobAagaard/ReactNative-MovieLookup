@@ -7,11 +7,12 @@ import {
   TextInput
 } from "react-native";
 import * as firebase from "../db/firebaseConfig";
-import store from "../searchStore";
+import store from "../redux/searchStore";
 
 export class Hero extends React.Component {
   constructor(props) {
     super(props);
+    this.animatedFlex = 1;
     this.state = store.getState();
 
     store.subscribe(() => {
@@ -25,10 +26,6 @@ export class Hero extends React.Component {
     )
       .then(response => response.json())
       .then(responseJson => {
-        // this.setState({
-        //   listLoaded: true,
-        //   videoList: Array.from(responseJson.items)
-        // });
         store.dispatch({
           type: "VIDEOS_LOADED",
           videoList: Array.from(responseJson.items)
@@ -40,60 +37,63 @@ export class Hero extends React.Component {
   }
 
   toggleSearch = () => {
-    // this.setState({ logoClicked: !this.state.logoClicked });
     store.dispatch({ type: "TOGGLE_SEARCH" });
   };
 
   render() {
     return (
-      <TouchableOpacity onPress={this.toggleSearch} style={styles.container}>
-        {!this.state.logoClicked ? (
-          <Image
-            style={styles.heroImage}
-            source={require("./img/MovieLookup_transparent.png")}
-            resizeMode={"contain"}
-          />
-        ) : (
-          <View>
-            <TextInput
-              style={styles.heroInput}
-              autoFocus
-              placeholder="Find movie"
-              onChangeText={text => {
-                // this.setState({ searchText: text });
-                store.dispatch({ type: "NEW_SEARCH", text });
-              }}
-              value={this.state.searchText}
-              returnKeyType="search"
-              onSubmitEditing={event => {
-                var submitText = event.nativeEvent.text;
-                var searchQuery = submitText.replace(" ", "+");
-                console.log(searchQuery);
-                //this.setState({ searchQuery: submitText });
-                let YOUTUBE_API_KEY = "";
-                firebase.db.app
-                  .database()
-                  .ref("/store/YOUTUBE_API_KEY")
-                  .once("value")
-                  .then(snapshot => {
-                    YOUTUBE_API_KEY =
-                      (snapshot.val() && snapshot.val()) || "API_KEY_NOT_FOUND";
-                  })
-                  .then(() => {
-                    return this.fetchYoutubeVideos(
-                      YOUTUBE_API_KEY,
-                      searchQuery
-                    );
-                  })
-                  .catch(error => {
-                    console.log(error);
-                  });
-                //query using submitted text
-              }}
+      <View
+        style={{
+          ...this.props.style,
+          flex: this.state.logoFlexAnim
+        }}
+      >
+        <TouchableOpacity onPress={this.toggleSearch} style={styles.container}>
+          {!this.state.logoClicked ? (
+            <Image
+              style={styles.heroImage}
+              source={require("./img/MovieLookup_transparent.png")}
+              resizeMode={"contain"}
             />
-          </View>
-        )}
-      </TouchableOpacity>
+          ) : (
+            <View>
+              <TextInput
+                style={styles.heroInput}
+                autoFocus
+                placeholder="Find movie"
+                onChangeText={text => {
+                  store.dispatch({ type: "NEW_SEARCH", text });
+                }}
+                value={this.state.searchText}
+                returnKeyType="search"
+                onSubmitEditing={event => {
+                  var submitText = event.nativeEvent.text;
+                  var searchQuery = submitText.replace(" ", "+");
+                  let YOUTUBE_API_KEY = "";
+                  firebase.db.app
+                    .database()
+                    .ref("/store/YOUTUBE_API_KEY")
+                    .once("value")
+                    .then(snapshot => {
+                      YOUTUBE_API_KEY =
+                        (snapshot.val() && snapshot.val()) ||
+                        "API_KEY_NOT_FOUND";
+                    })
+                    .then(() => {
+                      return this.fetchYoutubeVideos(
+                        YOUTUBE_API_KEY,
+                        searchQuery
+                      );
+                    })
+                    .catch(error => {
+                      console.log(error);
+                    });
+                }}
+              />
+            </View>
+          )}
+        </TouchableOpacity>
+      </View>
     );
   }
 }
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   },
   heroInput: {
     textAlign: "center",
-    paddingTop: "25%",
+    paddingTop: 10,
     fontSize: 24
   }
 });
