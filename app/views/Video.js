@@ -7,7 +7,11 @@ import {
   TouchableWithoutFeedback,
   StyleSheet
 } from "react-native";
-import * as firebase from "../db/firebaseConfig";
+import {
+  fetchYoutubeApiKey,
+  fetchYoutubeVideos
+} from "../services/YoutubeService";
+import store from "../redux/searchStore";
 
 export class Video extends React.Component {
   static navigationOptions = {
@@ -16,49 +20,23 @@ export class Video extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      listLoaded: false
-    };
+    this.state = store.getState();
+
+    store.subscribe(() => {
+      this.setState(store.getState());
+    });
   }
   componentDidMount() {
-    let YOUTUBE_API_KEY = "";
-    firebase.db.app
-      .database()
-      .ref("/store/YOUTUBE_API_KEY")
-      .once("value")
-      .then(snapshot => {
-        YOUTUBE_API_KEY =
-          (snapshot.val() && snapshot.val()) || "API_KEY_NOT_FOUND";
-      })
-      .then(() => {
-        return this.fetchYoutubeVideos(YOUTUBE_API_KEY);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  fetchYoutubeVideos(YOUTUBE_API_KEY) {
-    return fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=interstellar&type=video&key=${YOUTUBE_API_KEY}`
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          listLoaded: true,
-          videoList: Array.from(responseJson.items)
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    fetchYoutubeApiKey().then(API_KEY => {
+      return fetchYoutubeVideos(API_KEY);
+    });
   }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View>
-        {this.state.listLoaded && (
+        {this.state.videosLoaded && (
           <View style={{ paddingTop: 30 }}>
             <FlatList
               data={this.state.videoList}
@@ -73,7 +51,7 @@ export class Video extends React.Component {
             />
           </View>
         )}
-        {!this.state.listLoaded && (
+        {!this.state.videosLoaded && (
           <View style={{ paddingTop: 30 }}>
             <Text>LOADING</Text>
           </View>

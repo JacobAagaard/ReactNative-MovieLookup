@@ -6,8 +6,11 @@ import {
   TouchableOpacity,
   TextInput
 } from "react-native";
-import * as firebase from "../db/firebaseConfig";
 import store from "../redux/searchStore";
+import {
+  fetchYoutubeApiKey,
+  fetchYoutubeVideosWithQuery
+} from "../services/YoutubeService";
 
 export class Hero extends React.Component {
   constructor(props) {
@@ -18,22 +21,6 @@ export class Hero extends React.Component {
     store.subscribe(() => {
       this.setState(store.getState());
     });
-  }
-
-  fetchYoutubeVideos(YOUTUBE_API_KEY, searchQuery) {
-    return fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${searchQuery}&type=video&key=${YOUTUBE_API_KEY}`
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        store.dispatch({
-          type: "VIDEOS_LOADED",
-          videoList: Array.from(responseJson.items)
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
   }
 
   toggleSearch = () => {
@@ -69,18 +56,9 @@ export class Hero extends React.Component {
                 onSubmitEditing={event => {
                   var submitText = event.nativeEvent.text;
                   var searchQuery = submitText.replace(" ", "+");
-                  let YOUTUBE_API_KEY = "";
-                  firebase.db.app
-                    .database()
-                    .ref("/store/YOUTUBE_API_KEY")
-                    .once("value")
-                    .then(snapshot => {
-                      YOUTUBE_API_KEY =
-                        (snapshot.val() && snapshot.val()) ||
-                        "API_KEY_NOT_FOUND";
-                    })
-                    .then(() => {
-                      return this.fetchYoutubeVideos(
+                  fetchYoutubeApiKey()
+                    .then(YOUTUBE_API_KEY => {
+                      return fetchYoutubeVideosWithQuery(
                         YOUTUBE_API_KEY,
                         searchQuery
                       );
